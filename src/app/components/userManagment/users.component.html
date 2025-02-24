@@ -1,0 +1,122 @@
+
+
+<div class="container-xl">
+<h1>User</h1>
+<!-- <button class="btn btn-success" (click)="loadAllUsers()">Show All Users</button> -->
+<button class="btn btn-success" (click)="addUserView()">Add User</button>
+<button class="btn btn-success" (click)="updateUserView()">Update User</button>
+<button class="btn btn-danger"  (click)="removeUserView()">Remove User</button>
+<button class="btn btn-primary"  (click)="userByIdView()">Select User By Id</button>
+<button class="btn btn-primary" (click)="userOrderByIdView()">Select Order and User By User Id</button>
+<hr />
+<div [ngSwitch]="task">
+    <ng-template ngSwitchCase="add">
+        <form [formGroup]="userForm" (ngSubmit)="onFormSubmitForAdd()">
+            <div formArrayName="usersArray">
+                <div *ngFor="let acl of usersFormArray.controls; let idx = index" [formGroupName]="idx">
+                    <p> <b>New User: {{idx + 1}}</b> </p>
+                    <p> New Id: <input formControlName="id"></p>
+                    <p> Name: <input formControlName="name"> </p>
+                    <p> password: <input formControlName="password"> </p>
+                    <p> <button type="button" class="btn btn-danger" (click)="deleteFormArrayControl(idx)">Delete</button></p>
+                </div>
+            </div>
+            <div>
+            <button class="btn btn-primary" type="button" (click)="addMoreControlForAdd()">Add More User</button>
+            <button class="btn btn-success" *ngIf="usersFormArray.length > 0"> Submit </button> 
+        </div>
+        </form>
+    </ng-template>
+    <ng-template ngSwitchCase="update">
+        <form [formGroup]="userForm" (ngSubmit)="onFormSubmitForUpdate()">
+            <div formArrayName="usersArray">
+                <div *ngFor="let acl of usersFormArray.controls; let idx = index" [formGroupName]="idx">
+                    <p> Id: <input formControlName="id" readonly></p>
+                    <p> Update Name: <input formControlName="name"> </p>
+                    <p> Update password: <input formControlName="password"> </p>
+                    <p> <button class="btn btn-danger" type="button" (click)="deleteFormArrayControl(idx)">Delete</button> </p>
+                </div>
+            </div>
+            <div>
+             <button type="button" class="btn btn-primary" (click)="addMoreControlForUpdate()">Update More user</button>
+             <button class="btn btn-success" *ngIf="usersFormArray.length > 0"> Update </button> 
+        </div>
+        </form>
+    </ng-template>
+    <ng-template ngSwitchCase="remove">
+        <form [formGroup]="userForm" (ngSubmit)="onFormSubmitForRemove()">
+            <div formArrayName="usersArray">
+                <ul>
+                    <li *ngFor="let acl of usersFormArray.controls; let idx = index" [formGroupName]="idx">
+                        <input type="checkbox" formControlName="chk" />
+                        {{acl.get('userData')?.value?.id}}
+                        | {{acl.get('userData')?.value?.name}}
+                        | {{acl.get('userData')?.value?.password}}
+                        <input type="hidden" formControlName="userData">
+                    </li>
+                </ul>
+            </div>
+            <hr />
+            <p *ngIf="usersFormArray.length > 0">
+                <button class="btn btn-success">Remove Selected</button> <button class="btn btn-danger" type="button" (click)="clearAllUsers()">Clear All</button>
+            </p>
+        </form>
+    </ng-template>
+    <ng-template ngSwitchCase="select">
+        <div> Enter Id: <input [(ngModel)]="userId">
+            <button class="btn btn-primary" type="button" (click)="selectUserById()">Show User</button>
+        </div>
+        <div *ngIf="userById$ | async as user">
+        <h3>User Id: {{user?.id}}</h3> 
+        <h3>Total Name: {{user?.name}}</h3>
+        <h3>Total Password: {{user?.password}}</h3>
+        </div>
+    </ng-template>
+    <ng-template ngSwitchCase="selectOrder">
+        <p> Enter Id: <input [(ngModel)]="userId">
+            <button class="btn btn-primary" type="button" (click)="selectUserAndOrderById()">Show User Order</button>
+        </p>
+        <div *ngIf=" orderById$ | async as userAndOrders">
+  
+            <h3>User Name: {{userAndOrders?.name}}</h3> 
+            <h3>Total Orders: {{userAndOrders?.sumOfOrders}}</h3>
+            <div *ngFor="let userOrder of userAndOrders?.orders; let idx = index">
+                order {{idx+1}}. userId: {{userOrder?.userId}}  total: {{userOrder?.total}} 
+            </div>
+        </div>
+    </ng-template>
+</div>
+
+    <div class="table-responsive">
+		<div class="table-wrapper">
+			<div class="table-title">
+				<div class="row">
+					<div class="col-sm-6">
+						<h2>Users <b>DB</b></h2>
+					</div>
+				</div>
+			</div>
+            <div class="table">
+                <div class="table-header">
+                  <div class="table-header-row">
+                    <!-- <div class="table-header-cell col"> <input type="checkbox"/></div> -->
+                    <div class="table-header-cell col">Id</div>
+                    <div class="table-header-cell col">Name</div>
+                    <div class="table-header-cell col">Password</div>
+                  </div>
+                </div>
+                <div class="table-body">
+                    <div class="table-body-row" *ngFor="let user of allUsers$ | async">
+                        <!-- <div class="table-body-cell col">
+                            <input type="checkbox"/>
+                       </div> -->
+                       <div class="table-body-cell col">{{user.id}}</div>
+                       <div class="table-body-cell col">{{user.name}}</div>
+                       <div class="table-body-cell col">{{user.password}}</div>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+
+</div>

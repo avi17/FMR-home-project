@@ -1,0 +1,115 @@
+<h1>Orders</h1>
+<div *ngIf="orderAndUserByUserId$ | async as userAndOrders">
+  
+    <h3>User Name: {{userAndOrders?.name}}</h3> 
+    <h3>Total Orders: {{userAndOrders?.sumOfOrders}}</h3>
+    <div *ngFor="let userOrder of userAndOrders?.orders; let idx = index">
+        order {{idx+1}}. userId: {{userOrder?.userId}}  total: {{userOrder?.total}} 
+    </div>
+</div>
+
+
+
+
+<!-- <h1>Orders</h1>
+<button (click)="loadAllOrders()">Show All Orders</button>
+<button (click)="addOrderView()">Add Order</button>
+<button (click)="updateOrderView()">Update Order</button>
+<button (click)="removeOrderView()">Remove Order</button>
+<button (click)="orderByIdView()">Select Order By Id</button> 
+<button (click)="orderByUserIdView()">Select Order By User Id</button> 
+<ul>
+    <li *ngFor="let userOrder of orderAndUserByUserId$ | async">
+        USERORDER: {{userOrder?.id}} - {{userOrder?.name}}  - {{userOrder?.total}} - {{userOrder?.userId}}
+    </li>
+</ul>
+
+<ul>
+    <li *ngFor="let user of orderByUserId$ | async">
+       ORDER: {{order.id}} - {{order.name}}  - {{order.total}} - {{order.userId}}
+    </li>
+</ul>
+<hr />
+<div [ngSwitch]="task">
+    <ng-template ngSwitchCase="all">
+        <b>Total Count: {{count$ | async}}</b>
+        <br /><br /><b>Ids:</b> {{orderIds$ | async}}
+        <br /><br /><b>Details:</b>
+        <ul>
+            <li *ngFor="let order of allOrders$ | async">
+                {{order | json}}
+                {{order.id}} - {{order.userId}} - {{order.total}}
+            </li>
+        </ul>
+    </ng-template>
+    <ng-template ngSwitchCase="add">
+        <form [formGroup]="orderForm" (ngSubmit)="onFormSubmitForAdd()">
+            <div formArrayName="ordersArray">
+                <div *ngFor="let acl of ordersFormArray.controls; let idx = index" [formGroupName]="idx">
+                    <p> <b>New Order: {{idx + 1}}</b> </p>
+                    <p> New Id: <input formControlName="id"></p>
+                    <p> userId: <input formControlName="userId"> </p>
+                    <p> total: <input formControlName="total"> </p>
+                    <p> <button type="button" (click)="deleteFormArrayControl(idx)">Delete</button></p>
+                </div>
+            </div>
+            <button type="button" (click)="addMoreControlForAdd()">Add More Order</button>
+            <hr />
+            <p *ngIf="ordersFormArray.length > 0"> <button> Submit </button> </p>
+        </form>
+    </ng-template>
+    <ng-template ngSwitchCase="update">
+        <form [formGroup]="orderForm" (ngSubmit)="onFormSubmitForUpdate()">
+            <div formArrayName="ordersArray">
+                <div *ngFor="let acl of ordersFormArray.controls; let idx = index" [formGroupName]="idx">
+                    <p> Id: <input formControlName="id" readonly></p>
+                    <p> Update userId: <input formControlName="userId"> </p>
+                    <p> Update total: <input formControlName="total"> </p>
+                    <p> <button type="button" (click)="deleteFormArrayControl(idx)">Delete</button> </p>
+                </div>
+            </div>
+            <button type="button" (click)="addMoreControlForUpdate()">Update More order</button>
+            <hr />
+            <p *ngIf="ordersFormArray.length > 0"> <button> Update </button> </p>
+        </form>
+    </ng-template>
+    <ng-template ngSwitchCase="remove">
+        <form [formGroup]="orderForm" (ngSubmit)="onFormSubmitForRemove()">
+            <div formArrayName="ordersArray">
+                <ul>
+                    <li *ngFor="let acl of ordersFormArray.controls; let idx = index" [formGroupName]="idx">
+                        <input type="checkbox" formControlName="chk" />
+                        {{acl.get('orderData')?.value?.id}}
+                        | {{acl.get('orderData')?.value?.userId}}
+                        | {{acl.get('orderData')?.value?.total}}
+                        <input type="hidden" formControlName="orderData">
+                    </li>
+                </ul>
+            </div>
+            <hr />
+            <p *ngIf="ordersFormArray.length > 0">
+                <button>Remove Selected</button> <button type="button" (click)="clearAllOrders()">Clear All</button>
+            </p>
+        </form>
+    </ng-template>
+    <ng-template ngSwitchCase="select">
+        <p> Enter Id: <input [(ngModel)]="orderId">
+            <button type="button" (click)="selectOrderById()">Show Order</button>
+        </p>
+        <ul>
+            <li *ngIf="orderById$ | async as order">
+                {{order.id}} - {{order.userId}} - {{order.total}}
+            </li>
+        </ul>
+    </ng-template>
+    <ng-template ngSwitchCase="selectByUserId">
+        <p> Enter Id: <input [(ngModel)]="userId">
+            <button type="button" (click)="selectOrderByUserId()">Show User Order</button>
+        </p>
+        <ul>
+            <li *ngFor="let user of orderByUserId$ | async">
+                {{order.id}} - {{order.name}}  - {{order.total}} - {{order.userId}}
+            </li>
+        </ul>
+    </ng-template>
+</div> -->

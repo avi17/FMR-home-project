@@ -1,0 +1,1 @@
+{"ast":null,"code":"export class OrderObject {\n  constructor() {\n    this.userId = 0;\n    this.total = 0;\n    this.id = 0;\n  }\n}\nexport class OrderWithUserData {\n  constructor() {\n    this.sumOfOrders = 0;\n    this.userId = 0;\n    this.total = 0;\n    this.id = 0;\n    this.name = \"\";\n  }\n}","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}

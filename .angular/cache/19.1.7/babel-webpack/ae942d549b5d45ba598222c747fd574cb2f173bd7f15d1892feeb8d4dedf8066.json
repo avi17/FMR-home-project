@@ -1,0 +1,1 @@
+{"ast":null,"code":"import * as reducer from \"./users/user.reducer\";\nexport const reducers = {\n  userState: reducer.userReducer,\n  orderState: reducer.userReducer\n};","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}
